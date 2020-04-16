@@ -47,15 +47,17 @@ def alcohol_consumption():
     
     session = Session(engine)
 
-    results = session.query(AC.country_id, AC.year, AC.both_sexes, AC.male, AC.female).all()
+    # results = session.query(AC.country_id, AC.year, AC.both_sexes, AC.male, AC.female).all()
+
+    results = session.query(CO.country_name, AC.year, AC.both_sexes, AC.male, AC.female).join(CO, AC.country_id==CO.country_id)
 
     session.close()
 
     data = []
 
-    for country_id, year, both_sexes, male, female in results:
+    for country_name, year, both_sexes, male, female in results:
         data_dict = {}
-        data_dict["country_id"] = country_id
+        data_dict["country_name"] = country_name
         data_dict["year"] = year
         data_dict["both_sexes"] = both_sexes
         data_dict["male"] = male
