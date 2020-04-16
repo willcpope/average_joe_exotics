@@ -3,28 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Alcohol and Traffic Deaths</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
 <header>
-    <h1>
+    <div class="row text-center">
+     <div class="col-md-12 col-lg-12">
+      <div class="header">
+       <h1>
         Alcohol Consumption and Traffic Deaths in Europe
-    </h1>
-    <p>
+       </h1>
+       <p>
         Data vizualization of traffic related deaths and rate of alcohol consumption.
-    </p>
+       </p>
+      </div>
+     </div>
+    </div>
 </header>
 <main>
-    <h2>
-        Here is our data visualization!
-    </h2>
-    <svg>
-        <!-- Inject SVG map with layers and bubbles here -->
-    </svg>
+    <div class="container">
+        <div class="row text-center">
+          <div class="col-xs-12 col-s-12 col-md-12 col-lg-12">
+            <div id="map">
+            <p>MAP HERE</p>
+            <svg>
+              <!-- We append our chart here. -->
+            </svg>
+            </div>
+          </div>
+        </div>
+      </div>
 </main>
-<footer>
-    <p>created by the average joe exotics</p>
+<footer class="footer">
+    <div class="container">
+     <div class="text-muted text-center">
+        <p>created by the average joe exotics</p>
+     </div>
+    </div>
 </footer>
 </body>
 </html>
