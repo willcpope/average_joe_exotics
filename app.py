@@ -30,7 +30,10 @@ TD = Base.classes.Traffic_Related_Deaths
 # setup Flask
 app = Flask(__name__)
 
-# Flask routes
+################
+## Home Route ##
+################
+
 @app.route("/")
 def welcome():
     return (
@@ -42,14 +45,16 @@ def welcome():
         f"/api/v1.0/traffic_related_deaths"
     )
 
+###############################
+## Alcohol Consumption Route ##
+###############################
+
 @app.route("/api/v1.0/alcohol_consumption")
 def alcohol_consumption():
     
     session = Session(engine)
 
-    # results = session.query(AC.country_id, AC.year, AC.both_sexes, AC.male, AC.female).all()
-
-    results = session.query(CO.country_name, AC.year, AC.both_sexes, AC.male, AC.female).join(CO, AC.country_id==CO.country_id)
+    results = session.query(CO.country_name, AC.year, AC.both_sexes, AC.male, AC.female).join(CO, AC.country_id==CO.country_id).all()
 
     session.close()
 
@@ -66,21 +71,112 @@ def alcohol_consumption():
 
     return jsonify(data)
 
+##############################
+## Alcohol Production Route ##
+##############################
+
 @app.route("/api/v1.0/alcohol_production")
 def alcohol_production():
-    return "<h1>PLACEHOLDER TEXT</h1>"
+
+    session = Session(engine)
+
+    results = session.query(CO.country_name, AP.rank, AP.production_tonnes).join(CO, AP.country_id==CO.country_id).all()
+
+    session.close()
+
+    data = []
+
+    for country_name, rank, production_tonnes in results:
+        data_dict = {}
+        data_dict["country_name"] = country_name
+        data_dict["rank"] = rank
+        data_dict["production_tonnes"] = production_tonnes
+        data.append(data_dict)
+
+    return jsonify(data)
+
+###################
+## Country Route ##
+###################
 
 @app.route("/api/v1.0/country")
 def country():
-    return "<h1>PLACEHOLDER TEXT</h1>"
+
+    session = Session(engine)
+
+    results = session.query(CO.country_id, CO.country_name).all()
+
+    session.close()
+
+    data = []
+
+    for country_id, country_name in results:
+        data_dict = {}
+        data_dict["country_id"] = country_id
+        data_dict["country_name"] = country_name
+        data.append(data_dict)
+
+    return jsonify(data)
+
+###################
+## Reviews Route ##
+###################    
 
 @app.route("/api/v1.0/reviews")
 def reviews():
-    return "<h1>PLACEHOLDER TEXT</h1>"
+   
+    session = Session(engine)
+
+    results = session.query(CO.country_name, RW.review_id, RW.description, RW.designation, RW.points, RW.price, RW.province, RW.region_1, RW.region_2, RW.taster_name, RW.taster_twitter_handle, RW.title, RW.variety, RW.winery).join(CO, RW.country_id==CO.country_id).all()
+
+    session.close()
+
+    data = []
+
+    for country_name, review_id, description, designation, points, price, province, region_1, region_2, taster_name, taster_twitter_handle, title, variety, winery in results:
+        data_dict={}
+        data_dict["country_name"] = country_name
+        data_dict["review_id"] = review_id
+        data_dict["description"] = description
+        data_dict["designation"] = designation
+        data_dict["points"] = points
+        data_dict["price"] = price
+        data_dict["province"] = province
+        data_dict["region_1"] = region_1
+        data_dict["region_2"] = region_2
+        data_dict["taster_name"] = taster_name
+        data_dict["taster_twitter_handle"] = taster_twitter_handle
+        data_dict["title"] = title
+        data_dict["variety"] = variety
+        data_dict["winery"] = winery
+        data.append(data_dict)
+
+    return jsonify(data)
+
+##################################
+## Traffic Related Deaths Route ##
+##################################
 
 @app.route("/api/v1.0/traffic_related_deaths")
 def traffic_related_deaths():
-    return "<h1>PLACEHOLDER TEXT</h1>"
+    
+    session = Session(engine)
+
+    results = session.query(CO.country_name, TD.fatalaties_100K_people_per_year, TD.fatalities_100K_mv_per_year, TD.year).join(CO, TD.country_id==CO.country_id).all()
+
+    session.close()
+
+    data = []
+
+    for country_name, fatalities_100K_people_per_year, fatalities_100K_mv_per_year, year in results:
+        data_dict = {}
+        data_dict["country_name"] = country_name
+        data_dict["fatalities_100K_people_per_year"] = fatalities_100K_people_per_year
+        data_dict["fatalities_100K_mv_per_year"] = fatalities_100K_mv_per_year
+        data_dict["year"] = year
+        data.append(data_dict)
+
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run(debug=True)
