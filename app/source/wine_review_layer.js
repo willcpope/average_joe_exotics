@@ -12,8 +12,30 @@ var myMap = L.map("map", {
     accessToken: API_KEY
   }).addTo(myMap);
 
-  function chooseColor(borough) {
-    switch (borough) {
+  function countrycolor(item){
+    if (item <= 1){
+        return "yellow"
+    }
+    else if (item < 5){
+        return "green"
+    }
+    else {
+        return "red"
+    }
+}
+function colorstyle(feature){
+   return {
+        "color": "#ff7800",
+        "radius": feature.properties.mag*5,
+        "weight": .5,
+        "opacity": 1,
+        "fillOpacity": .8,
+        fillColor: choosecolor(feature.properties.mag)
+    }
+}
+
+  function chooseColor(country) {
+    switch (country) {
     case "Netherlands":
       return "yellow";
     case "Bronx":
