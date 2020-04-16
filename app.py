@@ -47,11 +47,22 @@ def alcohol_consumption():
     
     session = Session(engine)
 
-    results = session.query(AC.year).all()
+    results = session.query(AC.country_id, AC.year, AC.both_sexes, AC.male, AC.female).all()
 
     session.close()
 
-    return results
+    data = []
+
+    for country_id, year, both_sexes, male, female in results:
+        data_dict = {}
+        data_dict["country_id"] = country_id
+        data_dict["year"] = year
+        data_dict["both_sexes"] = both_sexes
+        data_dict["male"] = male
+        data_dict["female"] = female
+        data.append(data_dict)
+
+    return jsonify(data)
 
 @app.route("/api/v1.0/alcohol_production")
 def alcohol_production():
