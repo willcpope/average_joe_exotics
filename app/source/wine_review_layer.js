@@ -11,6 +11,10 @@ var myMap = L.map("map", {
     id: "mapbox.streets",
     accessToken: API_KEY
   }).addTo(myMap);
+  var consuptiondata = "data/alcohol_consumption.json";
+  d3.json(consuptiondata, function(response){
+    console.log(response);
+  });
 
   function countrycolor(item){
     if (item <= 1){
@@ -23,33 +27,25 @@ var myMap = L.map("map", {
         return "red"
     }
 }
-function colorstyle(feature){
-   return {
-        "color": "#ff7800",
-        "radius": feature.properties.mag*5,
-        "weight": .5,
-        "opacity": 1,
-        "fillOpacity": .8,
-        fillColor: choosecolor(feature.properties.mag)
-    }
-}
+
 
   function chooseColor(country) {
     switch (country) {
     case "Netherlands":
-      return "yellow";
-    case "Bronx":
+      return "yellow"; //countrycolor(bothsexes)
+    case "Germany":
       return "red";
-    case "Manhattan":
+    case "Italy":
       return "orange";
-    case "Queens":
-      return "green";
-    case "Staten Island":
+    case "France":
+      return "white";
+    case "Belgium":
       return "purple";
     default:
       return "green";
     }
   }
+
   var geodata = "data/countries-hires.json"
   d3.json(geodata, function(response){
       console.log(response);
@@ -63,6 +59,7 @@ function colorstyle(feature){
             weight: 1.5
           };
         }
+      
       }).addTo(myMap);
   });
   // Store API query variables
