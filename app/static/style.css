@@ -5,14 +5,14 @@ body{
 }
 
 header{
-    color: purple;
+    color: rgb(107, 20, 141);
     margin: 1%;
     padding: 2%;
 }
 
 hr{
-    background-color: purple;
-    color: purple;
+    background-color: rgb(107, 20, 141);
+    color: rgb(107, 20, 141);
 }
 
 .footer {
