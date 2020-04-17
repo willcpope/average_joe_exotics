@@ -13,9 +13,6 @@ from config import password
 # create db connection
 engine = create_engine(f"postgresql+psycopg2://postgres:{password}@localhost:5432/mad_data_db")
 
-# print table names, debugging
-print(engine.table_names())
-
 # create base
 Base = automap_base()
 Base.prepare(engine, reflect=True)
@@ -127,26 +124,22 @@ def reviews():
    
     session = Session(engine)
 
-    results = session.query(CO.country_name, RW.review_id, RW.description, RW.designation, RW.points, RW.price, RW.province, RW.region_1, RW.region_2, RW.taster_name, RW.taster_twitter_handle, RW.title, RW.variety, RW.winery).join(CO, RW.country_id==CO.country_id).all()
+    results = session.query(CO.country_name, RW.review_id, RW.designation, RW.points, RW.price, RW.province, RW.region_1, RW.region_2, RW.variety, RW.winery).join(CO, RW.country_id==CO.country_id).all()
 
     session.close()
 
     data = []
 
-    for country_name, review_id, description, designation, points, price, province, region_1, region_2, taster_name, taster_twitter_handle, title, variety, winery in results:
+    for country_name, review_id, designation, points, price, province, region_1, region_2, variety, winery in results:
         data_dict={}
         data_dict["country_name"] = country_name
         data_dict["review_id"] = review_id
-        data_dict["description"] = description
         data_dict["designation"] = designation
         data_dict["points"] = points
         data_dict["price"] = price
         data_dict["province"] = province
         data_dict["region_1"] = region_1
         data_dict["region_2"] = region_2
-        data_dict["taster_name"] = taster_name
-        data_dict["taster_twitter_handle"] = taster_twitter_handle
-        data_dict["title"] = title
         data_dict["variety"] = variety
         data_dict["winery"] = winery
         data.append(data_dict)
