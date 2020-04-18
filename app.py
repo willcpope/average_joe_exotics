@@ -8,7 +8,9 @@ from sqlalchemy import create_engine, func
 
 from flask import Flask, jsonify
 
+
 from flask_cors import CORS
+
 
 from config import password
 
@@ -29,7 +31,6 @@ TD = Base.classes.Traffic_Related_Deaths
 # setup Flask
 app = Flask(__name__)
 
-# add CORS support
 CORS(app)
 
 ################
@@ -177,5 +178,7 @@ def traffic_related_deaths():
     return jsonify(data)
 
 if __name__ == '__main__':
+
     app.jinja_env.cache = {}
+
     app.run(debug=True)
