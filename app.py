@@ -8,6 +8,8 @@ from sqlalchemy import create_engine, func
 
 from flask import Flask, jsonify
 
+from flask_cors import CORS
+
 from config import password
 
 # create db connection
@@ -26,6 +28,9 @@ TD = Base.classes.Traffic_Related_Deaths
 
 # setup Flask
 app = Flask(__name__)
+
+# add CORS support
+CORS(app)
 
 ################
 ## Home Route ##
