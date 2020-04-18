@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alcohol and Traffic Deaths</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+ <header>
+    <div class="row text-center">
+     <div class="col-md-12 col-lg-12">
+      <div class="header">
+       <h1>
+        Alcohol and Traffic Deaths in Europe
+       </h1>
+       <br>
+       <h3>
+        Production | Consumption | Accidents
+       </h3>
+      </div>
+     </div>
+    </div>
+ <hr>
+ </header>
+ <br>
+ <main>
+    <div class="container">
+        <div class="row text-left">
+            <div class="col-md-12 col-lg-12">
+                <ul>
+                    <li>How does the consumption of alcohol relate to traffic accidents?</li>
+                    <li>Does the rate of production impact consumption?</li>
+                    <li>Do countries with better wine have more accidents?</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row text-center">
+          <div class="col-xs-12 col-s-12 col-md-12 col-lg-12">
+            <div id="map">
+              <svg><!-- We append our chart here. -->
+            </svg>
+            </div>
+          </div>
+        </div>
+      <br>
+      <div class="row text-left">
+          <div class="col-xs-12 col-s-12 col-md-12 col-lg-12">
+            <h3>Project Findings</h3>
+            <br>
+            <p>
+                DESCRIBE FINDINGS HERE
+            </p>
+          </div>
+      </div>
+    </div>
+ </main>
+ <footer class="footer">
+    <div class="container-fluid">
+     <div class="row">
+        <div class="col-md-4 col-lg-4">
+            <img src="static/assets/gt-logo-gold.png"></img>
+        </div>
+        <div class="col-md-4 col-lg-4">
+            <div class="text-muted text-center">
+                <p>created by the average joe exotics</p>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-4">
+            <div class="text-right">
+                <a href="https://github.com/TJL30308/average_joe_exotics">
+                    <img src="static/assets/github_icon.svg"></img>
+                </a>
+            </div>
+        </div>
+     </div>
+    </div>
+ </footer>
+</body>
+
+<!-- These need to be updated once files script files are completed -->
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+
+
+<!-- Leaflet CSS & JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+crossorigin=""></script>
+
+<script type="text/javascript" src="static/config.js"></script>
+<!-- Our JS -->
+
+<script type="text/javascript" src="static/app.js"></script>
+</html>

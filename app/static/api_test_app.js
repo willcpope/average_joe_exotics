@@ -12,5 +12,4 @@ routes.forEach(function(route) {
     d3.json(base + route).then(function(data) {
         console.log("API route: " + route);
         console.log(data);
-    })
-});
+    });
