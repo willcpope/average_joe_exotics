@@ -149,4 +149,25 @@ function do_that(consumption){
 
     }
   }).addTo(myMap);
+
+  var legend = L.control({ position: "bottomright" });
+  legend.onAdd = function() {
+    var div = L.DomUtil.create("div", "info legend");
+    var colors = ["#ffffffe3", "#bb9ef5e3", "#9c70f3e3","#7d45eae3","#5600ff","tomato"];
+    var colorscodes = ["0-2", "2.1-5","5.5-7","7.1-10","10.1-12", "12.1+"];
+    var labels = [];
+
+    // limits.forEach(function(limit, index) {
+    //   labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+    // });
+    for(var i = 0; i < colors.length; i ++){
+        labels.push("<i style=\"background-color: " + colors[i] + "\">&nbsp;&nbsp;&nbsp;</i><i>" + colorscodes[i] + "</i><br>");
+    }
+
+    div.innerHTML += "" + labels.join("") + "";
+    return div;
+  };
+
+  // Adding legend to the map
+  legend.addTo(myMap);
 };
