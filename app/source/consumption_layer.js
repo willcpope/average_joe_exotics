@@ -1,24 +1,21 @@
 // Creating map object
 var myMap = L.map("map", {
     center: [52.52, 13.40],
+    // center: [32.46, -84.96],
     zoom: 4
   });
 
   // Adding tile layer to the map
   L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-    maxZoom: 10,
+    maxZoom: 12,
     id: "mapbox.streets",
     accessToken: API_KEY
   }).addTo(myMap);
 
   var consumptiondata = "data/alcohol_consumption.json";
   var geodata = "data/countries-hires.json";
-  var consumption = []
-  var color = ""
-
-
-
+  
 d3.json(consumptiondata, function(response){
     console.log("this is response")
     console.log(response);
@@ -32,6 +29,7 @@ function chooseColor(place) {
   }else if (place <=5)
   {
     return "#bb9ef5e3";
+    //#bb9ef5e3
   }
   else if (place <=7)
   {
@@ -43,11 +41,13 @@ function chooseColor(place) {
   }
   else if (place <=12)
   {
-    return "#6e2cefed";
+    return "#5600ff";
+    //#6e2cefed
   }
   else if (place <=15)
   {
-    return "#5600ff";
+    return "tomato";
+    //#5600ff
   }
   else{
     return "black";
@@ -60,7 +60,8 @@ function do_this(consumption){
     for(var i =0; i<response.features.length; i++){
       country = response.features[i].properties.SOVEREIGNT
       for(var z =0; z<consumption.length; z++){
-        if(country==consumption[z].country_name || country == "United States of America"
+        if(country==consumption[z].country_name 
+        || country == "United States of America"
         || country == "Venezuela"
         || country == "Russia"
         || country == "Czech Republic"
@@ -93,7 +94,8 @@ function do_this(consumption){
         || country == "Kashmir"
         || country == "Vatican"
         || country == "San Marino"
-        || country == "The Bahamas"       
+        || country == "The Bahamas"
+        || country == "Federated States of Micronesia"       
         ){
           response.features[i].properties["both_sexes"] = consumption[z].both_sexes;
           response.features[i].properties["male"] = consumption[z].male;
@@ -120,7 +122,7 @@ function do_that(consumption){
       return {
         color: "white",
         fillColor: chooseColor(feature.properties.both_sexes),
-        fillOpacity: 0.5,
+        fillOpacity: .7,
         weight: 1.5
       };
     },
@@ -135,16 +137,16 @@ function do_that(consumption){
         mouseout: function(event) {
           layer = event.target;
           layer.setStyle({
-            fillOpacity: 0.5
+            fillOpacity: 0.7
           });
         },
         click: function(event) {
-          console.log(feature.properties.both_sexes);
-          myMap.fitBounds(event.target.getBounds());
+          console.log(feature.properties.SOVEREIGNT);
+          //myMap.fitBounds(event.target.getBounds());
         }
       });
       layer.bindPopup("<h4>" + "Per capita consumption is " + feature.properties.both_sexes + "</h4> <hr> <h5>" + feature.properties.SOVEREIGNT + "</h5>");
 
     }
   }).addTo(myMap);
-}
+};
