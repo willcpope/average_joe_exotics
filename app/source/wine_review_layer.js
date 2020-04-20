@@ -11,28 +11,33 @@ var myMap = L.map("map", {
     id: "mapbox.streets",
     accessToken: API_KEY
   }).addTo(myMap);
+
   var consuptiondata = "data/alcohol_consumption.json";
+  var geodata = "data/countries-hires.json"
+
+
   d3.json(consuptiondata, function(response){
     console.log(response);
   });
 
-  function countrycolor(item){
-    if (item <= 1){
+  function countrycolor(chocolate){
+    //console.log(item)
+    if (chocolate >= 1){
         return "yellow"
     }
-    else if (item < 5){
-        return "green"
+    else if (chocolate >= 2){
+        return "red"
     }
     else {
-        return "red"
+        return "black"
     }
 }
 
 
   function chooseColor(country) {
     switch (country) {
-    case "Netherlands":
-      return "yellow"; //countrycolor(bothsexes)
+    case "Poland":
+      return "brown"; 
     case "Germany":
       return "red";
     case "Italy":
@@ -45,23 +50,26 @@ var myMap = L.map("map", {
       return "green";
     }
   }
+  
 
-  var geodata = "data/countries-hires.json"
+
   d3.json(geodata, function(response){
       console.log(response);
       L.geoJson(response,{
-        style: function(feature) {
+        style: function(apple) {
+          
           return {
             color: "white",
             // Call the chooseColor function to decide which color to color our neighborhood (color based on borough)
-            fillColor: chooseColor(feature.properties.SOVEREIGNT),
+            fillColor: chooseColor(apple.properties.SOVEREIGNT),
             fillOpacity: 0.5,
             weight: 1.5
           };
         }
       
-      }).addTo(myMap);
-  });
+      })
+  }).addTo(myMap);
+
   // Store API query variables
 
   var baseURL = "data/winemag-data-130k-v2.csv";
