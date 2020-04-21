@@ -58,7 +58,7 @@ function do_this(consumption){
       country = response.features[i].properties.SOVEREIGNT
       for(var z =0; z<consumption.length; z++){
         if(country==consumption[z].country_name 
-        // || country == "United States of America"
+        || country == "United States of America"
         || country == "Venezuela"
         || country == "Russia"
         || country == "Czech Republic"
