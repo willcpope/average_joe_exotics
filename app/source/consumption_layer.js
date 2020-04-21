@@ -17,7 +17,7 @@ var myMap = L.map("map", {
   var geodata = "data/countries-hires.json";
   
 d3.json(consumptiondata, function(response){
-    console.log("this is response")
+    console.log("this is consumption data")
     console.log(response);
     do_this(response);
 });
@@ -29,7 +29,6 @@ function chooseColor(place) {
   }else if (place <=5)
   {
     return "#bb9ef5e3";
-    //#bb9ef5e3
   }
   else if (place <=7)
   {
@@ -42,12 +41,10 @@ function chooseColor(place) {
   else if (place <=12)
   {
     return "#5600ff";
-    //#6e2cefed
   }
   else if (place <=15)
   {
     return "tomato";
-    //#5600ff
   }
   else{
     return "black";
@@ -61,7 +58,7 @@ function do_this(consumption){
       country = response.features[i].properties.SOVEREIGNT
       for(var z =0; z<consumption.length; z++){
         if(country==consumption[z].country_name 
-        || country == "United States of America"
+        // || country == "United States of America"
         || country == "Venezuela"
         || country == "Russia"
         || country == "Czech Republic"
@@ -95,27 +92,34 @@ function do_this(consumption){
         || country == "Vatican"
         || country == "San Marino"
         || country == "The Bahamas"
-        || country == "Federated States of Micronesia"       
+        || country == "Federated States of Micronesia"
+        || country == "Monaco"       
         ){
           response.features[i].properties["both_sexes"] = consumption[z].both_sexes;
           response.features[i].properties["male"] = consumption[z].male;
           response.features[i].properties["female"] = consumption[z].female;
           response.features[i].properties["year"] = consumption[z].year;
+          
         }
-      }
-
+        
+      } 
     }
-    console.log(response.features);
     do_that(response);
-    
-  });
+  })
 };
 function do_that(consumption){
-  
+    console.log("this is consumption")
+    console.log(consumption);
+  for(var i =0; i<consumption.features.length; i++){
 
-  console.log("this is consumption")
-  console.log(consumption);
-
+    if(consumption.features[i].properties.both_sexes == "undefined")
+  {
+    console.log(consumption.features[i].properties.SOVEREIGNT);
+  }
+  else{
+    //  console.log(consumption.features[i].properties.SOVEREIGNT);
+  }
+  };
   L.geoJson(consumption, {
    
     style: function(feature) {
@@ -125,6 +129,7 @@ function do_that(consumption){
         fillOpacity: .7,
         weight: 1.5
       };
+      
     },
     onEachFeature: function(feature, layer) {
       layer.on({
@@ -144,6 +149,8 @@ function do_that(consumption){
           console.log(feature.properties.SOVEREIGNT);
           //myMap.fitBounds(event.target.getBounds());
         }
+        
+
       });
       layer.bindPopup("<h4>" + "Per capita consumption is " + feature.properties.both_sexes + "</h4> <hr> <h5>" + feature.properties.SOVEREIGNT + "</h5>");
 
@@ -155,11 +162,8 @@ function do_that(consumption){
     var div = L.DomUtil.create("div", "info legend");
     var colors = ["#ffffffe3", "#bb9ef5e3", "#9c70f3e3","#7d45eae3","#5600ff","tomato"];
     var colorscodes = ["0-2", "2.1-5","5.5-7","7.1-10","10.1-12", "12.1+"];
-    var labels = [];
+    var labels = []
 
-    // limits.forEach(function(limit, index) {
-    //   labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
-    // });
     for(var i = 0; i < colors.length; i ++){
         labels.push("<i style=\"background-color: " + colors[i] + "\">&nbsp;&nbsp;&nbsp;</i><i>" + colorscodes[i] + "</i><br>");
     }
