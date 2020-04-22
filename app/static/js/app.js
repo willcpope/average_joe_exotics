@@ -1,7 +1,7 @@
 // Create a map object
 var myMap = L.map("map", {
     center: [50.3785, 14.9706],
-    zoom: 3
+    zoom: 4
   });
   
 L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
@@ -121,6 +121,7 @@ function do_that(consumption){
     //  console.log(consumption.features[i].properties.SOVEREIGNT);
   }
   };
+
   L.geoJson(consumption, {
    
     style: function(feature) {
