@@ -183,7 +183,9 @@ function do_that(consumption){
 // Country data
 var jsonData;
 var queryUrl = "../data/traffic_related_deaths.json"
+
 d3.json(queryUrl, function (data) {
+
   jsonData = data;
   
   data.features.forEach(obj => {
@@ -214,21 +216,21 @@ function getColor(d) {
                  'blue' ;                
 }
 
-// var legend = L.control({position: 'bottomright'});
+// // var legend = L.control({position: 'bottomright'});
 
-// legend.onAdd = function (map) {
-//   var div = L.DomUtil.create('div', 'info legend'),
-//     fatalities = [0, 1, 2, 3, 4, 5],
-//     labels = [];
+// // legend.onAdd = function (map) {
+// //   var div = L.DomUtil.create('div', 'info legend'),
+// //     fatalities = [0, 1, 2, 3, 4, 5],
+// //     labels = [];
   
-//     // Loop through data
-//   for (var i = 0; i < fatalities.length; i++) {
-//     div.innerHTML +=
-//       '<i style="background:' + getColor(fatalities[i] + 1) + '"></i> ' +
-//       fatalities[i] + (fatalities[i + 1] ? '&ndash;' + fatalities[i + 1] + '<br>' : '+');
-//   }
-//   return div;
-// };
+// //     // Loop through data
+// //   for (var i = 0; i < fatalities.length; i++) {
+// //     div.innerHTML +=
+// //       '<i style="background:' + getColor(fatalities[i] + 1) + '"></i> ' +
+// //       fatalities[i] + (fatalities[i + 1] ? '&ndash;' + fatalities[i + 1] + '<br>' : '+');
+// //   }
+// //   return div;
+// // };
 
-// legend.addTo(myMap);
+// // legend.addTo(myMap);
   
