@@ -93,7 +93,8 @@ function do_this(consumption){
         || country == "San Marino"
         || country == "The Bahamas"
         || country == "Federated States of Micronesia"
-        || country == "Monaco"       
+        || country == "Monaco"
+        || country == "Liechtenstein"       
         ){
           response.features[i].properties["both_sexes"] = consumption[z].both_sexes;
           response.features[i].properties["male"] = consumption[z].male;
@@ -163,11 +164,11 @@ function do_that(consumption){
   legend.onAdd = function() {
     var div = L.DomUtil.create("div", "info legend");
     var colors = ["#ffffffe3", "#bb9ef5e3", "#9c70f3e3","#7d45eae3","#5600ff","tomato"];
-    var colorscodes = ["0-2", "2.1-5","5.5-7","7.1-10","10.1-12", "12.1+"];
+    var colorscodes = ["0-2","2.1-5","5.5-7","7.1-10","10.1-12","12.1+"];
     var labels = []
 
     for(var i = 0; i < colors.length; i ++){
-        labels.push("<i style=\"background-color: " + colors[i] + "\">&nbsp;&nbsp;&nbsp;</i><i>" + colorscodes[i] + "</i><br>");
+        labels.push("<i style=\"background-color:"+colors[i]+"\">&nbsp;&nbsp;&nbsp;</i><i>"+colorscodes[i] +"</i><br>");
     }
 
     div.innerHTML += "" + labels.join("") + "";
