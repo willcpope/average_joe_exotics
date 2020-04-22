@@ -1,10 +1,10 @@
 // Create a map object
 var myMap = L.map("map", {
-    center: [15.5994, -28.6731],
+    center: [50.3785, 14.9706],
     zoom: 3
   });
   
-  L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
     maxZoom: 18,
     id: "mapbox.streets-basic",
@@ -14,7 +14,7 @@ var myMap = L.map("map", {
 
 /* Alessio Base Layers */
 var consumptiondata = "../data/alcohol_consumption.json";
-  var geodata = "../data/countries-hires.json";
+var geodata = "../data/countries-hires.json";
   
 d3.json(consumptiondata, function(response){
     console.log("this is consumption data")
@@ -107,6 +107,7 @@ function do_this(consumption){
     do_that(response);
   })
 };
+
 function do_that(consumption){
     console.log("this is consumption")
     console.log(consumption);
@@ -212,21 +213,21 @@ function getColor(d) {
                  'blue' ;                
 }
 
-var legend = L.control({position: 'bottomright'});
+// var legend = L.control({position: 'bottomright'});
 
-legend.onAdd = function (map) {
-  var div = L.DomUtil.create('div', 'info legend'),
-    fatalities = [0, 1, 2, 3, 4, 5],
-    labels = [];
+// legend.onAdd = function (map) {
+//   var div = L.DomUtil.create('div', 'info legend'),
+//     fatalities = [0, 1, 2, 3, 4, 5],
+//     labels = [];
   
-    // Loop through data
-  for (var i = 0; i < fatalities.length; i++) {
-    div.innerHTML +=
-      '<i style="background:' + getColor(fatalities[i] + 1) + '"></i> ' +
-      fatalities[i] + (fatalities[i + 1] ? '&ndash;' + fatalities[i + 1] + '<br>' : '+');
-  }
-  return div;
-};
+//     // Loop through data
+//   for (var i = 0; i < fatalities.length; i++) {
+//     div.innerHTML +=
+//       '<i style="background:' + getColor(fatalities[i] + 1) + '"></i> ' +
+//       fatalities[i] + (fatalities[i + 1] ? '&ndash;' + fatalities[i + 1] + '<br>' : '+');
+//   }
+//   return div;
+// };
 
-legend.addTo(myMap);
+// legend.addTo(myMap);
   
