@@ -179,43 +179,44 @@ function do_that(consumption){
   legend.addTo(myMap);
 };
 
-/* Will Bubble Layer*/
+/* Bubble Layer*/
 
-// Country data
-var jsonData;
-var queryUrl = "../data/traffic_related_deaths.json"
-
-d3.json(queryUrl, function (data) {
-
-  jsonData = data;
+async function doThings() {
+  const geoData = await d3.json('././data/countries_info.json');
+  const deathData = await d3.json('././data/traffic_related_deaths.json');
   
-  data.features.forEach(obj => {
-    var lat = obj.geometry.coordinates[1];
-    var lng = obj.geometry.coordinates[0];
-    var fatality = obj.properties.fatalities_100K_people_per_year;
-    var country = obj.properties.country_name;
+  geoData.forEach(obj => {
+    var lat = obj.latlng[0];
+    var lng = obj.latlng[1];
+    var name = obj.name;
   
+  deathData.forEach(obj => {
+    var fatalities = obj.fatalities_100K_people_per_year;
+
     // Add circles to map
     L.circle([lat, lng], {
       stroke: false,
       fillOpacity: .75,
-      color: getColor(fatality),
-      fillColor: getColor(fatality),
+      color: getColor(fatalities),
+      fillColor: getColor(fatalities),
       // Adjust radius
-      radius: fatality * 30000
-    }).bindPopup("<h3>" + country + "<h3><h3>Fatalities 100K People Per Year: " + fatality + "</h3>").addTo(myMap);
+      radius: fatalities * 5000
+    }).bindPopup("<h3>" + name + "<h3><h3>Fatalities: " + fatalities + "</h3>").addTo(myMap);
   });
-});
+  });
+};
   
 // Conditionals for data
 function getColor(d) {
-  return d > 5 ? 'red' :
-         d > 4 ? 'orange' :
-         d > 3 ? 'yellow' :
-         d > 2 ? 'green' :
+  return d > 20 ? 'red' :
+         d > 15 ? 'orange' :
+         d > 10 ? 'yellow' :
+         d > 5 ? 'green' :
          d > 1 ? 'teal' :
                  'blue' ;                
-}
+};
+
+doThings();
 
 // // var legend = L.control({position: 'bottomright'});
 
