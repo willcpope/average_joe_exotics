@@ -182,6 +182,7 @@ function do_that(consumption){
 /* Bubble Layer*/
 
 async function doThings() {
+    
   const geoData = await d3.json('././data/countries_info.json');
   const deathData = await d3.json('././data/traffic_related_deaths.json');
   
