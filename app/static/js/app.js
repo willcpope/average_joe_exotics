@@ -243,16 +243,15 @@ function create_bubbles() {
           fillColor: getColor(fatalities[i]),
           // Adjust radius
           radius: fatalities[i] * 5000
-        }).bindPopup("<h3>" + name[i] + "<h3><h3>Fatalities: " + fatalities[i] + "</h3>").addTo(myMap);
+        }).bindPopup("<h3>" + name[i] + "<h3><h3>Fatalities(100K) Per Year: " + fatalities[i] + "</h3>").addTo(myMap);
   
         // Conditionals for data
         function getColor(d) {
-          return d > 20 ? 'red' :
-                  d > 15 ? 'orange' :
-                  d > 10 ? 'yellow' :
-                  d > 5 ? 'green' :
-                  d > 1 ? 'teal' :
-                          'blue' ;    
+          return d > 24 ? 'black' :
+                  d > 16 ? 'red' :
+                  d > 8 ? 'orange' :
+                  d > 1 ? 'yellow' :
+                          'white' ;    
         }
       }
     });
