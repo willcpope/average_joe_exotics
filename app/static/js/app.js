@@ -188,6 +188,7 @@ function do_that(consumption){
     var colorscodes = ["0-2","2.1-5","5.5-7","7.1-10","10.1-12","12.1+"];
     var labels = []
 
+    labels.push("<p>CPCL</p>");
     for(var i = 0; i < colors.length; i ++){
         labels.push("<i style=\"background-color:"+colors[i]+"\">&nbsp;&nbsp;&nbsp;</i><i>"+colorscodes[i] +"</i><br>");
     }
@@ -235,7 +236,7 @@ function create_death_bubbles() {
           weight: 1,
           fillColor: getColor(fatalities[i]),
           // Adjust radius
-          radius: fatalities[i] * 10000
+          radius: fatalities[i] * 7500
         }).bindPopup("<h3>" + name[i] + "</h3><hr><h4>Fatalities(100K) Per Year: " + fatalities[i] + "</h4>").addTo(myMap);
   
         // Conditionals for data
