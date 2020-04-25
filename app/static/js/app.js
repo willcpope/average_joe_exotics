@@ -236,7 +236,7 @@ function create_death_bubbles() {
           fillColor: getColor(fatalities[i]),
           // Adjust radius
           radius: fatalities[i] * 10000
-        }).bindPopup("<h3>" + name[i] + "<h3><h3>Fatalities(100K) Per Year: " + fatalities[i] + "</h3>").addTo(myMap);
+        }).bindPopup("<h3>" + name[i] + "</h3><hr><h4>Fatalities(100K) Per Year: " + fatalities[i] + "</h4>").addTo(myMap);
   
         // Conditionals for data
         function getColor(d) {
@@ -250,3 +250,28 @@ function create_death_bubbles() {
     });
   });
 }
+
+const xMax = 100;
+anime({
+  targets: '.header',
+  easing: 'easeInOutSine',
+  delay: 3000,
+  duration: 2000,
+  translateX: [
+    {
+      value: xMax * -1,
+    },
+    {
+      value: xMax,
+    },
+    {
+      value: xMax/-2,
+    },
+    {
+      value: xMax/2,
+    },
+    {
+      value: 0
+    }
+  ],
+});
