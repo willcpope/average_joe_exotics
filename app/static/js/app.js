@@ -20,7 +20,7 @@ d3.json(consumptiondata, function(response){
     // debugging
     console.log("this is consumption data")
     console.log(response);
-    do_this(response);
+    base_layer(response);
 });
 
 function chooseColor(place) {
@@ -52,7 +52,7 @@ function chooseColor(place) {
   }
 };
 
-function do_this(consumption){
+function base_layer(consumption){
 
   d3.json(geodata, function(response){
 
@@ -198,6 +198,7 @@ function do_that(consumption){
 
   // Adding legend to the map
   legend.addTo(myMap);
+  create_bubbles();
 };
 
 function create_bubbles() {
@@ -257,71 +258,3 @@ function create_bubbles() {
     });
   });
 }
-
-/* Bubble Layer*/
-
-async function doThings() {
-    
-  const geoData = await d3.json('data/countries_info.json');
-  const deathData = await d3.json('data/traffic_related_deaths.json');
-  
-  var lat = [];
-  var lng = [];
-  var name = [];
-
-  // debugging
-  console.log("geoData const");
-  console.log(geoData);
-
-  geoData.forEach(obj => {
-    lat.append(obj.latlng[0]);
-    lng.append(obj.latlng[1]);
-    name.append(obj.name);
-  
-  deathData.forEach(obj => {
-    var fatalities = obj.fatalities_100K_people_per_year;
-
-    // Add circles to map
-    L.circle([lat, lng], {
-      stroke: false,
-      fillOpacity: .75,
-      color: getColor(fatalities),
-      fillColor: getColor(fatalities),
-      // Adjust radius
-      radius: fatalities * 5000
-    }).bindPopup("<h3>" + name + "<h3><h3>Fatalities: " + fatalities + "</h3>").addTo(myMap);
-  });
-  });
-};
-  
-// Conditionals for data
-function getColor(d) {
-  return d > 20 ? 'red' :
-         d > 15 ? 'orange' :
-         d > 10 ? 'yellow' :
-         d > 5 ? 'green' :
-         d > 1 ? 'teal' :
-                 'blue' ;                
-};
-
-// doThings();
-create_bubbles();
-
-// // var legend = L.control({position: 'bottomright'});
-
-// // legend.onAdd = function (map) {
-// //   var div = L.DomUtil.create('div', 'info legend'),
-// //     fatalities = [0, 1, 2, 3, 4, 5],
-// //     labels = [];
-  
-// //     // Loop through data
-// //   for (var i = 0; i < fatalities.length; i++) {
-// //     div.innerHTML +=
-// //       '<i style="background:' + getColor(fatalities[i] + 1) + '"></i> ' +
-// //       fatalities[i] + (fatalities[i + 1] ? '&ndash;' + fatalities[i + 1] + '<br>' : '+');
-// //   }
-// //   return div;
-// // };
-
-// // legend.addTo(myMap);
-  
