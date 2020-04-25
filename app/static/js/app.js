@@ -198,10 +198,10 @@ function do_that(consumption){
 
   // Adding legend to the map
   legend.addTo(myMap);
-  create_bubbles();
+  create_death_bubbles();
 };
 
-function create_bubbles() {
+function create_death_bubbles() {
   d3.json('data/countries_info.json', function(geoData){
     
     d3.json('data/traffic_related_deaths.json', function(deathData){
@@ -209,30 +209,22 @@ function create_bubbles() {
       var lat = [];
       var lng = [];
       var name = [];
+      var fatalities = [];
     
       // debugging
       //console.log("geoData object");
       //console.log(geoData);
-    
-      // retreive data and save to lists
-      geoData.forEach(obj => {
-        lat.push(obj.latlng[0]);
-        lng.push(obj.latlng[1]);
-        name.push(obj.name);
-      });
-      
-      var fatalities = [];
 
-      // debugging
-      //console.log("deathData object");
-      //console.log(deathData);
-
-      // retrieve data and save list
-      deathData.forEach(obj => {
-        fatalities.push(obj.fatalities_100K_people_per_year);
-      });
-      
-      //console.log(fatalities);
+      for(var i = 0; i < deathData.length; i++) {
+        for(var j = 0; j < geoData.length; j++) {
+          if(deathData[i].country_name === geoData[j].name) {
+            lat.push(geoData[j].latlng[0]);
+            lng.push(geoData[j].latlng[1]);
+            name.push(geoData[j].name);
+            fatalities.push(deathData[i].fatalities_100K_people_per_year);
+          }
+        }
+      }
 
       // Add circles to map
       for(var i = 0; i < fatalities.length; i++) {
@@ -240,9 +232,10 @@ function create_bubbles() {
           stroke: true,
           fillOpacity: .75,
           color: 'black',
+          weight: 1,
           fillColor: getColor(fatalities[i]),
           // Adjust radius
-          radius: fatalities[i] * 5000
+          radius: fatalities[i] * 10000
         }).bindPopup("<h3>" + name[i] + "<h3><h3>Fatalities(100K) Per Year: " + fatalities[i] + "</h3>").addTo(myMap);
   
         // Conditionals for data
