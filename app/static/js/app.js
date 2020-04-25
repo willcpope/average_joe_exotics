@@ -13,10 +13,11 @@ L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 
 
 /* Alessio Base Layers */
-var consumptiondata = "../data/alcohol_consumption.json";
-var geodata = "../data/countries-hires.json";
+var consumptiondata = "data/alcohol_consumption.json";
+var geodata = "data/countries-hires.json";
   
 d3.json(consumptiondata, function(response){
+    // debugging
     console.log("this is consumption data")
     console.log(response);
     do_this(response);
@@ -52,12 +53,24 @@ function chooseColor(place) {
 };
 
 function do_this(consumption){
+
   d3.json(geodata, function(response){
-    
-    for(var i =0; i<response.features.length; i++){
+
+    // debugging
+    //console.log("geodata response object:");
+    //console.log(response);
+
+    // loop thru response 
+    for(var i = 0; i < response.features.length; i++){
+      
+      // declare country name
       country = response.features[i].properties.SOVEREIGNT
-      for(var z =0; z<consumption.length; z++){
-        if(country==consumption[z].country_name 
+
+      // loop thru consumption object
+      for(var j = 0; j < consumption.length; j++){
+
+        // find country name in consumption object
+        if(country == consumption[j].country_name 
         || country == "United States of America"
         || country == "Venezuela"
         || country == "Russia"
@@ -96,33 +109,41 @@ function do_this(consumption){
         || country == "Monaco"
         || country == "Liechtenstein"       
         ){
-          response.features[i].properties["both_sexes"] = consumption[z].both_sexes;
-          response.features[i].properties["male"] = consumption[z].male;
-          response.features[i].properties["female"] = consumption[z].female;
-          response.features[i].properties["year"] = consumption[z].year;
+          // update geodata properties to match consumption object's
+          response.features[i].properties["both_sexes"] = consumption[j].both_sexes;
+          response.features[i].properties["male"] = consumption[j].male;
+          response.features[i].properties["female"] = consumption[j].female;
+          response.features[i].properties["year"] = consumption[j].year;
           
         }
         
       } 
     }
+
+    // debugging
+    //console.log("Updated geodata");
+    //console.log(response);
+    
+    // send geodata object to function
     do_that(response);
   })
 };
 
 function do_that(consumption){
-    console.log("this is consumption")
-    console.log(consumption);
+
+  // debugging
+  console.log("this is consumption");
+  console.log(consumption);
+  
+  // cleanup both_sexes field
   for(var i =0; i<consumption.features.length; i++){
 
-    if(consumption.features[i].properties.both_sexes == "undefined")
-  {
-    console.log(consumption.features[i].properties.SOVEREIGNT);
-  }
-  else{
-    //  console.log(consumption.features[i].properties.SOVEREIGNT);
-  }
+    if(consumption.features[i].properties.both_sexes == "undefined") {
+      console.log(consumption.features[i].properties.SOVEREIGNT);
+    }
   };
 
+  // create geoJson layer
   L.geoJson(consumption, {
    
     style: function(feature) {
@@ -179,17 +200,83 @@ function do_that(consumption){
   legend.addTo(myMap);
 };
 
+function create_bubbles() {
+  d3.json('data/countries_info.json', function(geoData){
+    
+    d3.json('data/traffic_related_deaths.json', function(deathData){
+      
+      var lat = [];
+      var lng = [];
+      var name = [];
+    
+      // debugging
+      //console.log("geoData object");
+      //console.log(geoData);
+    
+      // retreive data and save to lists
+      geoData.forEach(obj => {
+        lat.push(obj.latlng[0]);
+        lng.push(obj.latlng[1]);
+        name.push(obj.name);
+      });
+      
+      var fatalities = [];
+
+      // debugging
+      //console.log("deathData object");
+      //console.log(deathData);
+
+      // retrieve data and save list
+      deathData.forEach(obj => {
+        fatalities.push(obj.fatalities_100K_people_per_year);
+      });
+      
+      //console.log(fatalities);
+
+      // Add circles to map
+      for(var i = 0; i < fatalities.length; i++) {
+        L.circle([lat[i], lng[i]], {
+          stroke: false,
+          fillOpacity: .75,
+          color: getColor(fatalities[i]),
+          fillColor: getColor(fatalities[i]),
+          // Adjust radius
+          radius: fatalities[i] * 5000
+        }).bindPopup("<h3>" + name[i] + "<h3><h3>Fatalities: " + fatalities[i] + "</h3>").addTo(myMap);
+  
+        // Conditionals for data
+        function getColor(d) {
+          return d > 20 ? 'red' :
+                  d > 15 ? 'orange' :
+                  d > 10 ? 'yellow' :
+                  d > 5 ? 'green' :
+                  d > 1 ? 'teal' :
+                          'blue' ;    
+        }
+      }
+    });
+  });
+}
+
 /* Bubble Layer*/
 
 async function doThings() {
     
-  const geoData = await d3.json('././data/countries_info.json');
-  const deathData = await d3.json('././data/traffic_related_deaths.json');
+  const geoData = await d3.json('data/countries_info.json');
+  const deathData = await d3.json('data/traffic_related_deaths.json');
   
+  var lat = [];
+  var lng = [];
+  var name = [];
+
+  // debugging
+  console.log("geoData const");
+  console.log(geoData);
+
   geoData.forEach(obj => {
-    var lat = obj.latlng[0];
-    var lng = obj.latlng[1];
-    var name = obj.name;
+    lat.append(obj.latlng[0]);
+    lng.append(obj.latlng[1]);
+    name.append(obj.name);
   
   deathData.forEach(obj => {
     var fatalities = obj.fatalities_100K_people_per_year;
@@ -217,7 +304,8 @@ function getColor(d) {
                  'blue' ;                
 };
 
-doThings();
+// doThings();
+create_bubbles();
 
 // // var legend = L.control({position: 'bottomright'});
 
