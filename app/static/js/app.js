@@ -237,9 +237,9 @@ function create_bubbles() {
       // Add circles to map
       for(var i = 0; i < fatalities.length; i++) {
         L.circle([lat[i], lng[i]], {
-          stroke: false,
+          stroke: true,
           fillOpacity: .75,
-          color: getColor(fatalities[i]),
+          color: 'black',
           fillColor: getColor(fatalities[i]),
           // Adjust radius
           radius: fatalities[i] * 5000
