@@ -20,7 +20,8 @@ d3.json(consumptiondata, function(response){
     // debugging
     console.log("this is consumption data")
     console.log(response);
-    base_layer(response);
+    consumption_layer(response);
+    load_animation();
 });
 
 function chooseColor(place) {
@@ -52,7 +53,7 @@ function chooseColor(place) {
   }
 };
 
-function base_layer(consumption){
+function consumption_layer(consumption){
 
   d3.json(geodata, function(response){
 
@@ -125,11 +126,11 @@ function base_layer(consumption){
     //console.log(response);
     
     // send geodata object to function
-    do_that(response);
+    country_borders(response);
   })
 };
 
-function do_that(consumption){
+function country_borders(consumption){
 
   // debugging
   console.log("this is consumption");
@@ -252,27 +253,30 @@ function create_death_bubbles() {
   });
 }
 
-const xMax = 100;
-anime({
-  targets: '.header',
-  easing: 'easeInOutSine',
-  delay: 3000,
-  duration: 2000,
-  translateX: [
-    {
-      value: xMax * -1,
-    },
-    {
-      value: xMax,
-    },
-    {
-      value: xMax/-2,
-    },
-    {
-      value: xMax/2,
-    },
-    {
-      value: 0
-    }
-  ],
-});
+function load_animation() {
+  const xMax = 100;
+  anime({
+    targets: '.header',
+    easing: 'easeInOutSine',
+    delay: 3000,
+    duration: 2000,
+    translateX: [
+      {
+        value: xMax * -1,
+      },
+      {
+        value: xMax,
+      },
+      {
+        value: xMax/-2,
+      },
+      {
+        value: xMax/2,
+      },
+      {
+        value: 0
+      }
+    ],
+  });
+}
+
