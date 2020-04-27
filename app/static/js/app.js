@@ -201,6 +201,7 @@ function country_borders(consumption){
   // Adding legend to the map
   legend.addTo(myMap);
   create_death_bubbles();
+  create_production_bubbles();
 };
 
 function create_death_bubbles() {
@@ -246,6 +247,54 @@ function create_death_bubbles() {
                   d > 16 ? 'red' :
                   d > 8 ? 'orange' :
                   d > 1 ? 'yellow' :
+                          'white' ;    
+        }
+      }
+    });
+  });
+}
+
+function create_production_bubbles() {
+  d3.json('data/countries_info.json', function(geoData){
+    
+    d3.json('data/alcohol_production.json', function(production_data){
+      
+      var lat = [];
+      var lng = [];
+      var name = [];
+      var production = [];
+
+      for(var i = 0; i < production_data.length; i++) {
+        for(var j = 0; j < geoData.length; j++) {
+          if(production_data[i].country_name === geoData[j].name) {
+            lat.push(geoData[j].latlng[0]);
+            lng.push(geoData[j].latlng[1]);
+            name.push(geoData[j].name);
+            production.push(production_data[i].production_tonnes);
+          }
+        }
+      }
+
+      var bins = (Math.max(...production) - Math.min(...production))/4
+
+      // Add circles to map
+      for(var i = 0; i < production.length; i++) {
+        L.circle([lat[i], lng[i]], {
+          stroke: true,
+          fillOpacity: .75,
+          color: 'black',
+          weight: 1,
+          fillColor: getColor(production[i]),
+          // Adjust radius
+          radius: production[i] * 0.025
+        }).bindPopup("<h3>" + name[i] + "</h3><hr><h4>Production in Tonnes" + production[i] + "</h4>").addTo(myMap);
+  
+        // Conditionals for data
+        function getColor(d) {
+          return d > bins * 4 ? 'black' :
+                  d > bins * 3 ? 'red' :
+                  d > bins * 2 ? 'orange' :
+                  d > bins * 1 ? 'yellow' :
                           'white' ;    
         }
       }
