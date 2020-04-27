@@ -16,6 +16,7 @@ hr{
 }
 
 li{
+    list-style-type: none;
     font-style: italic;
 }
 
