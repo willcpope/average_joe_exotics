@@ -57,10 +57,6 @@ function consumption_layer(consumption){
 
   d3.json(geodata, function(response){
 
-    // debugging
-    //console.log("geodata response object:");
-    //console.log(response);
-
     // loop thru response 
     for(var i = 0; i < response.features.length; i++){
       
@@ -120,10 +116,6 @@ function consumption_layer(consumption){
         
       } 
     }
-
-    // debugging
-    //console.log("Updated geodata");
-    //console.log(response);
     
     // send geodata object to function
     country_borders(response);
@@ -172,7 +164,6 @@ function country_borders(consumption){
         },
         click: function(event) {
           console.log(feature.properties.SOVEREIGNT);
-          //myMap.fitBounds(event.target.getBounds());
         }
         
 
@@ -214,10 +205,6 @@ function create_death_bubbles() {
       var name = [];
       var fatalities = [];
     
-      // debugging
-      //console.log("geoData object");
-      //console.log(geoData);
-
       for(var i = 0; i < deathData.length; i++) {
         for(var j = 0; j < geoData.length; j++) {
           if(deathData[i].country_name === geoData[j].name) {
@@ -238,7 +225,7 @@ function create_death_bubbles() {
           weight: 1,
           fillColor: getColor(fatalities[i]),
           // Adjust radius
-          radius: fatalities[i] * 7500
+          radius: fatalities[i] * 8000
         }).bindPopup("<h3>" + name[i] + "</h3><hr><h4>Fatalities(100K) Per Year: " + fatalities[i] + "</h4>").addTo(myMap);
   
         // Conditionals for data
@@ -286,8 +273,8 @@ function create_production_bubbles() {
           weight: 1,
           fillColor: getColor(production[i]),
           // Adjust radius
-          radius: production[i] * 0.025
-        }).bindPopup("<h3>" + name[i] + "</h3><hr><h4>Production in Tonnes" + production[i] + "</h4>").addTo(myMap);
+          radius: production[i] * 0.005
+        }).bindPopup("<h3>" + name[i] + "</h3><hr><h4>Production in Tonnes " + production[i] + "</h4>").addTo(myMap);
   
         // Conditionals for data
         function getColor(d) {
