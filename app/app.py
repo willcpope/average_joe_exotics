@@ -6,16 +6,11 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 
-from flask_sqlalchemy import SQLAlchemy
-
 from flask import Flask, jsonify
 
-import os
+from config import password
 
 from flask_cors import CORS
-
-
-password = "Peru131187"
 
 # create db connection
 engine = create_engine(f"postgresql+psycopg2://postgres:{password}@localhost:5432/mad_data_db")
@@ -33,8 +28,6 @@ TD = Base.classes.Traffic_Related_Deaths
 
 # setup Flask
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '')
-db = SQLAlchemy(app)
 
 CORS(app)
 
