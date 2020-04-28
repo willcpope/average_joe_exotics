@@ -17,7 +17,7 @@ from flask_cors import CORS
 password = "Peru131187"
 
 # create db connection
-engine = create_engine(f"postgresql+psycopg2://postgres:{password}@localhost:5432/mad_data_db")
+engine = create_engine(f"postgresql+psycopg2://postgres:{password}@localhost:51782/mad_data_db")
 
 # create base
 Base = automap_base()
