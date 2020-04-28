@@ -179,6 +179,4 @@ def traffic_related_deaths():
 
 if __name__ == '__main__':
 
-    app.jinja_env.cache = {}
-
     app.run(debug=True)

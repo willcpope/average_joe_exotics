@@ -1,3 +1,11 @@
+var base = "http://127.0.0.1:5000";
+var api_consumption = base + "/api/v1.0/alcohol_consumption";
+var api_production = base + "/api/v1.0/alcohol_production";
+var api_country = base + "/api/v1.0/country";
+var api_reviews = base + "/api/v1.0/reviews";
+var api_deaths = base + "/api/v1.0/traffic_related_deaths";
+
+
 // Create a map object
 var myMap = L.map("map", {
     center: [50.3785, 14.9706],
@@ -13,7 +21,7 @@ L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 
 
 /* Alessio Base Layers */
-var consumptiondata = "data/alcohol_consumption.json";
+var consumptiondata = api_consumption;
 var geodata = "data/countries-hires.json";
   
 d3.json(consumptiondata, function(response){
@@ -198,7 +206,7 @@ function country_borders(consumption){
 function create_death_bubbles() {
   d3.json('data/countries_info.json', function(geoData){
     
-    d3.json('data/traffic_related_deaths.json', function(deathData){
+    d3.json(api_deaths, function(deathData){
       
       var lat = [];
       var lng = [];
@@ -244,7 +252,7 @@ function create_death_bubbles() {
 function create_production_bubbles() {
   d3.json('data/countries_info.json', function(geoData){
     
-    d3.json('data/alcohol_production.json', function(production_data){
+    d3.json(api_production, function(production_data){
       
       var lat = [];
       var lng = [];
