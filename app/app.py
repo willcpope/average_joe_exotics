@@ -32,7 +32,7 @@ TD = Base.classes.Traffic_Related_Deaths
 
 # setup Flask
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('postgres://mcxvreceqewwsn:d507f53f33e75200b9d02d03a116eb5945c17b3dcdaf83ce4436d54e3c22937e@ec2-23-20-129-146.compute-1.amazonaws.com:5432/dar88ao3ub7f1q', '')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '')
 db = SQLAlchemy(app)
 
 CORS(app)
